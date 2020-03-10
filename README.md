@@ -13,4 +13,4 @@
 ## Pages:
 - Cadastro dos atributos
 - Armazenar no firebase
-- Não obrigatório: vuetify
+- Frontend: sugestão vuetify
