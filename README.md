@@ -7,6 +7,8 @@
 - salario: 
 
 ## Tecnologia
+- HTML5
+- Javascript
 - Vue.js
 - Database: Firebase nosql
 
