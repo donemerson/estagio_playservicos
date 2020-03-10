@@ -6,11 +6,11 @@
 - dt_nasc: 
 - salario: 
 
-##Tecnologia
+## Tecnologia
 - Vue.js
 - Database: Firebase nosql
 
-##Pages:
+## Pages:
 - Cadastro dos atributos
 - Armazenar no firebase
 - Não obrigatório: vuetify
