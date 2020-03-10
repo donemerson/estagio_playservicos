@@ -11,6 +11,13 @@
 - Database: Firebase nosql
 
 ## Pages:
-- Cadastro dos atributos
-- Armazenar no firebase
+- Input (nome, cpf, dt_nasc, salario)
+- Listview()
+- add()
+- Edit()
+- Remove()
+- Procurar()
+-  - Filtro(com '< maior q' '> menor q', '== igual q);
+
+## Sugestões 
 - Frontend: sugestão vuetify
