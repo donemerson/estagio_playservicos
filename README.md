@@ -23,3 +23,10 @@
 
 ## Sugestões 
 - Frontend: sugestão vuetify
+
+## Links e fontes
+- [Started Vue.js Guide](https://cli.vuejs.org/dev-guide/plugin-dev.html#getting-started)
+- [Vue JS - Curso Completo](https://www.youtube.com/watch?v=Rz7D51uU_gY&list=PLWNaqtzH6CWR-dykXeDD5XmMzJur9JBIh&index=1)
+- 
+
+
