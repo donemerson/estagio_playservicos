@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- app 1 -->
+    <div id="app-1">
+        {{ message }}
+    </div>
+
+    <!-- app 2 -->
+    <div id="app-2">
+        <span v-bind:title="message">
+            Passe por cima de mim por alguns segundos
+            para ver meu bound title!
+        </span>
+    </div>
+
+    <!-- app 3 -->
+    <div id="app-3">
+        <span v-if="seen">
+            Agora você pode me ver
+        </span>
+    </div>
+
+    <!-- app 4 -->
+
+    <script>
+        // <!-- app 1 -->
+        var app_1 = new Vue({
+            el: '#app-1',
+            data: {
+                message: 'Olá mundo'
+            }
+        });
+
+        // <!-- app 2 -->
+        var app_2 = new Vue({
+            el: '#app-2',
+            data: {
+                message: 'Você carregou essa pagina em ' + new Date().toLocaleString()
+            },
+        });
+
+        // <!-- app 3 -->
+        var app_3 = new Vue({
+            el: '#app-3',
+            data: {
+                seen = true
+            },
+        });
+    </script>
+
+</body>
+
+</html>
