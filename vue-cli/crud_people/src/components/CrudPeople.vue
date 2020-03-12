@@ -61,7 +61,7 @@
     <div class="list-group">
       <!--- Não sei por que (pessoa,index) ao invés de (index, pessoa)-->
       <h3>LISTA</h3>
-      <div class="list-group-item" v-for="(person, index) in people" v-bind:key="index">
+      <div class="list-group-item" v-for="(person, index) in allPeople" v-bind:key="index">
         <!--bind-key serve para ordenar-->
         <span class="pessoa_name">
           <b>Nome:</b>
@@ -73,6 +73,7 @@
           {{person.cpf}}
         </span>
         <br />
+
         <span class="pessoa_dt_birth">
           <b>Data de nascimento:</b>
           {{person.dt_birth}}
@@ -84,23 +85,52 @@
         </span>
         <br />
         <p>
-          <a href="#" title="Excluir" @click.prevent="removePerson(person['.key'])">Excluir</a>
-          <a href="#" title="Editar" @click.prevent="updatePerson(person['.key'])">Editar</a>
+          <a href="#" title="Excluir" @click.prevent="removePerson(index)">Excluir</a>
+          <a href="#" title="Editar" @click.prevent="updatePerson(index)">Editar</a>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >Launch demo modal</button>
         </p>
       </div>
     </div>
     <hr />
-    <!-- TESTE-->
-    <div v-if="people.length > 0">
-      <ul>
-        <li v-for="(person, index) in people" v-bind:key="index">{{person}}</li>
-      </ul>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">...</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- TESTE-->
 </template>
 
 <script>
 import { peopleRef } from "../firebase";
+import { db } from "../firebase";
 export default {
   data() {
     return {
@@ -135,11 +165,12 @@ export default {
     },
     listPeople() {
       peopleRef.on("value", snapshoot => {
-        console.log(snapshoot.val());
+        //console.log(snapshoot.val());
         this.people = snapshoot.val();
-        console.log(this.people);
+        //console.log(this.people);
         //return snapshoot.val();
       });
+      return this.people;
     },
     addPerson() {
       if (this.checkForm()) {
@@ -157,11 +188,15 @@ export default {
         this.listPeople;
       }
     },
-    removePerson(key) {
-      console.log(key + "remove person");
+
+    removePerson(index) {
+      db.database()
+        .ref("people/" + index)
+        .set(null);
+      console.log("index = " + index + "- removed person");
     },
-    updatePerson(key) {
-      console.log(key + "update person");
+    updatePerson(index) {
+      return index;
     }
   },
   computed: {

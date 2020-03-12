@@ -13,5 +13,5 @@ const app = initializeApp({
   measurementId: "G-72L74P2ZVN"
 });
 
-export const db = app.database();
-export const peopleRef = db.ref('people');
+export const db = app;
+export const peopleRef = db.database().ref('people');
