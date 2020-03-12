@@ -49,7 +49,8 @@
                             <input type="number" name="salary" min="0" step="any" id="name" placeholder="Ex.: R$ 500,00"
                                 class="form-control" v-model="salary">
                         </p>
-                        <button v-on:click="addPerson" type="submit" class="btn btn-primary">Adicionar pessoa</button>
+                        <button v-on:click.prevent="addPerson" type="submit" class="btn btn-primary">Adicionar pessoa</button>
+                        <button v-on:click.prevent="saveUpdate" type="submit" class="btn btn-primary" hidden="true">Salvar alteração</button>
                         <hr />
                     </div>
                     <div class="list-group">
@@ -60,8 +61,8 @@
                             <span class="pessoa_salary"><b>Salário:</b> R$ {{pessoa.salary}}</span><br>
                             <div>
                                 <p>
-                                <a href="#" title="Excluir">Excluir</a>
-                                <a href="#" title="Editar">Editar</a>
+                                <a href="#" title="Excluir" @click.prevent="removePerson()">Excluir</a>
+                                <a href="#" title="Editar" @click.prevent="updatePerson()">Editar</a>
                                 </p>
                             </div>
                         </div>    
@@ -83,6 +84,15 @@
                     salary: 0.0,
                 }
             },
+            computed: {
+                enableSalve() {
+                    console.log('aqui vai a função para habilitar ou desabilitar o edit');
+                },
+
+            },
+            watch: {
+                //monitora os atributo do date(){}
+            },
             methods: {
                 addPerson() {
                     if (this.checkForm()) {
@@ -96,6 +106,11 @@
                     } else {
                         alert("Complete corretamente todos os campos do formulário");
                     }
+
+                    this.name = '';
+                    this.cpf = '';
+                    this.dt_birth = new Date(0);
+                    this.salary = 0.0;
                 },
                 checkForm() {
                     if (this.name == '') {
@@ -117,7 +132,15 @@
                 },
                 alreadyCPF(cpf) {
                     return false;
+                },
+                removePerson() {
+                    console.log('remove person');
+                },
+                updatePerson() {
+                    console.log('update person');
+
                 }
+
 
             }
         });
