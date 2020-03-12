@@ -60,119 +60,111 @@
     </div>
     <div class="list-group">
       <!--- Não sei por que (pessoa,index) ao invés de (index, pessoa)-->
+      <h3>LISTA</h3>
       <div
-        hidden="empty"
+        hidden="false"
         class="list-group-item"
-        v-for="(pessoa, index) of allPeople"
-        v-bind:key="index"
+        v-for="person in people"
+        v-bind:key="person['.key']"
       >
         <!--bind-key serve para ordenar-->
         <span class="pessoa_name">
           <b>Nome:</b>
-          {{pessoa.name}}
+          {{person.name}}
         </span>
         <br />
         <span class="pessoa_cpf">
           <b>CPF:</b>
-          {{pessoa.cpf}}
+          {{person.cpf}}
         </span>
         <br />
         <span class="pessoa_dt_birth">
           <b>Data de nascimento:</b>
-          {{pessoa.dt_birth}}
+          {{person.dt_birth}}
         </span>
         <br />
         <span class="pessoa_salary">
           <b>Salário:</b>
-          R$ {{pessoa.salary}}
+          R$ {{person.salary}}
         </span>
         <br />
-        <div>
-          <p>
-            <a href="#" title="Excluir" @click.prevent="removePerson()">Excluir</a>
-            <a href="#" title="Editar" @click.prevent="updatePerson()">Editar</a>
-          </p>
-        </div>
+        <p>
+          <a href="#" title="Excluir" @click.prevent="removePerson(person['.key'])">Excluir</a>
+          <a href="#" title="Editar" @click.prevent="updatePerson(person['.key'])">Editar</a>
+        </p>
       </div>
     </div>
     <hr />
+    <div>
+      <ul>
+        <li v-for="person of people" v-bind:key="person['.key']">{{person}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
+import { peopleRef } from "../firebase";
 export default {
   data() {
     return {
-      empty: true,
-      people: [{}],
+      people: peopleRef.on("value", snapshoot => {
+        this.people = snapshoot.val;
+      }),
       name: "",
       cpf: "",
       dt_birth: new Date(0),
       salary: 0.0
     };
   },
-  computed: {
-    allPeople() {
-      return this.people;
-    }
-  },
-  watch: {
-    //monitora os atributo do date(){}
-    people: function() {
-      if (people.lenght == 0) {
-        empty = true;
-      } else {
-        empty = false;
-      }
-    }
-  },
-  methods: {
-    addPerson() {
-      if (this.checkForm()) {
-        var p = {
-          name: this.name,
-          cpf: this.cpf,
-          dt_birth: this.dt_birth,
-          salary: this.salary
-        };
-        this.people.push(p);
-      } else {
-        alert("Complete corretamente todos os campos do formulário");
-      }
 
-      this.name = "";
-      this.cpf = "";
-      this.dt_birth = new Date(0);
-      this.salary = 0.0;
-    },
+  methods: {
     checkForm() {
       if (this.name == "") {
+        alert("Nome inválido");
+        return false;
+      } else if (this.cpf == "") {
+        // TODO: Mask
+        alert("CPF inválido");
         return false;
       } else if (this.dt_birth.toString() === new Date(0).toString()) {
         //pode ser melhorado
+        alert("Data de nascimento inválida");
         return false;
       } else if (this.salary < 0) {
         //coloquei min no input, porem por segurança
-        return false;
-      } else if (this.cpf == "") {
-        //add mask in future
-        return false;
-      } else if (this.alreadyCPF(this.cpf)) {
+        alert("Salário inválido");
         return false;
       } else {
         return true;
       }
     },
-    alreadyCPF() {
-      return false;
+    listPeople() {},
+    addPerson() {
+      if (this.checkForm()) {
+        peopleRef.push({
+          name: this.name,
+          cpf: this.cpf,
+          dt_birth: this.dt_birth,
+          salary: this.salary
+        });
+
+        this.name = "";
+        this.cpf = "";
+        this.dt_birth = new Date(0);
+        this.salary = 0.0;
+        this.listPeople;
+      }
     },
-    removePerson() {
-      console.log("remove person");
+    removePerson(key) {
+      console.log(key + "remove person");
     },
-    updatePerson() {
-      console.log("update person");
+    updatePerson(key) {
+      console.log(key + "update person");
     }
-  }
+  },
+  computed: {},
+  watch: {}
 };
 </script>
 
