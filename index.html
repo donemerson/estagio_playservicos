@@ -54,7 +54,7 @@
                         <hr />
                     </div>
                     <div class="list-group">
-                        <div class="list-group-item" v-for="pessoa in pessoas">
+                        <div class="list-group-item" v-for="pessoa in allPeople">
                             <span class="pessoa_name"><b>Nome:</b> {{pessoa.name}}</span><br>
                             <span class="pessoa_cpf"><b>CPF:</b> {{pessoa.cpf}}</span><br>
                             <span class="pessoa_dt_birth"><b>Data de nascimento:</b> {{pessoa.dt_birth}}</span><br>
@@ -72,7 +72,7 @@
               `,
             data() {
                 return {
-                    pessoas: [{
+                    people: [{
                         name: 'Emerson',
                         cpf: '047.455.621-28',
                         dt_birth: '13/11/2000',
@@ -85,9 +85,9 @@
                 }
             },
             computed: {
-                enableSalve() {
-                    console.log('aqui vai a função para habilitar ou desabilitar o edit');
-                },
+                allPeople() {
+                    return this.people;
+                }
 
             },
             watch: {
@@ -102,7 +102,7 @@
                             dt_birth: this.dt_birth,
                             salary: this.salary
                         };
-                        this.pessoas.push(p);
+                        this.people.push(p);
                     } else {
                         alert("Complete corretamente todos os campos do formulário");
                     }
