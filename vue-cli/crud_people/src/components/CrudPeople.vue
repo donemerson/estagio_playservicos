@@ -61,12 +61,7 @@
     <div class="list-group">
       <!--- Não sei por que (pessoa,index) ao invés de (index, pessoa)-->
       <h3>LISTA</h3>
-      <div
-        hidden="false"
-        class="list-group-item"
-        v-for="person in people"
-        v-bind:key="person['.key']"
-      >
+      <div class="list-group-item" v-for="(person, index) in people" v-bind:key="index">
         <!--bind-key serve para ordenar-->
         <span class="pessoa_name">
           <b>Nome:</b>
@@ -95,9 +90,10 @@
       </div>
     </div>
     <hr />
-    <div>
+    <!-- TESTE-->
+    <div v-if="people.length > 0">
       <ul>
-        <li v-for="person of people" v-bind:key="person['.key']">{{person}}</li>
+        <li v-for="(person, index) in people" v-bind:key="index">{{person}}</li>
       </ul>
     </div>
   </div>
@@ -108,9 +104,7 @@ import { peopleRef } from "../firebase";
 export default {
   data() {
     return {
-      people: peopleRef.on("value", snapshoot => {
-        this.people = snapshoot.val;
-      }),
+      people: [], //array two data bind
       name: "",
       cpf: "",
       dt_birth: new Date(0),
@@ -139,7 +133,14 @@ export default {
         return true;
       }
     },
-    listPeople() {},
+    listPeople() {
+      peopleRef.on("value", snapshoot => {
+        console.log(snapshoot.val());
+        this.people = snapshoot.val();
+        console.log(this.people);
+        //return snapshoot.val();
+      });
+    },
     addPerson() {
       if (this.checkForm()) {
         peopleRef.push({
@@ -163,7 +164,12 @@ export default {
       console.log(key + "update person");
     }
   },
-  computed: {},
+  computed: {
+    allPeople() {
+      this.listPeople();
+      return this.people;
+    }
+  },
   watch: {}
 };
 </script>
