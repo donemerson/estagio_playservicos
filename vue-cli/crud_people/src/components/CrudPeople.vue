@@ -59,8 +59,14 @@
       <hr />
     </div>
     <div class="list-group">
-      <div class="list-group-item" v-for="(index, pessoa) in allPeople" v-bind:key="index">
-        <!--não sei o porque desse v bind key -->
+      <!--- Não sei por que (pessoa,index) ao invés de (index, pessoa)-->
+      <div
+        hidden="empty"
+        class="list-group-item"
+        v-for="(pessoa, index) of allPeople"
+        v-bind:key="index"
+      >
+        <!--bind-key serve para ordenar-->
         <span class="pessoa_name">
           <b>Nome:</b>
           {{pessoa.name}}
@@ -97,14 +103,8 @@
 export default {
   data() {
     return {
-      people: [
-        {
-          name: "Emerson",
-          cpf: "047.455.621-28",
-          dt_birth: "13/11/2000",
-          salary: 500.0
-        }
-      ],
+      empty: true,
+      people: [{}],
       name: "",
       cpf: "",
       dt_birth: new Date(0),
@@ -118,6 +118,13 @@ export default {
   },
   watch: {
     //monitora os atributo do date(){}
+    people: function() {
+      if (people.lenght == 0) {
+        empty = true;
+      } else {
+        empty = false;
+      }
+    }
   },
   methods: {
     addPerson() {
