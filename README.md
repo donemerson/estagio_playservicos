@@ -50,3 +50,17 @@
 - https://github.com/KrunalLathiya/VueFirebaseTutorial/
 - https://appdividend.com/2018/04/21/vue-firebase-crud-example/
 -
+-
+- 11/03
+- - [VueJs em 1 hora](https://www.youtube.com/watch?v=cSa-SMVMGsE)
+- - https://br.vuejs.org/v2/api/
+- - https://vuejs.org/v2/api/
+- -
+- -
+
+### ASSISTIR SE DER TEMPO
+
+- [Iniciando com Vue.js / Parte #01 - Criando uma aplicação com vue cli](https://www.youtube.com/watch?v=ufQhPH0eyvo)
+- [Iniciando com Vue.js / Parte #02 - Estrutura do projeto 6 MINUTOS](https://www.youtube.com/watch?v=XDtEcPdCdeY)
+- [Interfaces com VueJS (Parte 1 de 7) - Iniciando com VueJS 7MINUTOS](https://www.youtube.com/watch?v=S42fJjanOMI)
+- [Aplicação SPA com Vue.js e Firebase - #01 - Instalação e conceitos](https://youtu.be/g5CuiTpx6Sg?list=PL7SyCwLzd5jt7zcDoBjGt7v7zViBt7WgA)
