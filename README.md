@@ -56,7 +56,7 @@
 - - https://br.vuejs.org/v2/api/
 - - https://vuejs.org/v2/api/
 - -
-- -
+- [Documentação com exemplos de busca, remoção de dados](https://firebase.google.com/docs/database/web/read-and-write?hl=pt-br)
 
 ### ASSISTIR SE DER TEMPO
 
@@ -64,6 +64,8 @@
 - [Iniciando com Vue.js / Parte #02 - Estrutura do projeto 6 MINUTOS](https://www.youtube.com/watch?v=XDtEcPdCdeY)
 - [Interfaces com VueJS (Parte 1 de 7) - Iniciando com VueJS 7MINUTOS](https://www.youtube.com/watch?v=S42fJjanOMI)
 - [Aplicação SPA com Vue.js e Firebase - #01 - Instalação e conceitos](https://youtu.be/g5CuiTpx6Sg?list=PL7SyCwLzd5jt7zcDoBjGt7v7zViBt7WgA)
+
+
 
 #### install
 
