@@ -46,6 +46,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Font and Links used to learn in 3 days
 
+- https://bootstrap-vue.js.org/docs
+- https://getbootstrap.com/docs/4.4/getting-started/introduction/
 - https://firebase.google.com/docs/database/web/read-and-write?hl=pt-br
 - https://github.com/vuejs/vuefire
 - https://cli.vuejs.org/dev-guide/plugin-dev.html#getting-started

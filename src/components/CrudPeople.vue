@@ -63,28 +63,96 @@
       <h3>LISTA</h3>
       <div class="list-group-item" v-for="(person, index) in allPeople" v-bind:key="index">
         <!--bind-key serve para ordenar-->
-        <span class="pessoa_name">
+        <span v-if="person.edit" class="pessoa_name">
+          Nome
+          <input
+            type="text"
+            name="nome"
+            id="name"
+            placeholder="Ex.: Fulano de Tal Sicrano"
+            class="form-control"
+            v-model="person.name"
+            style="padding:0px"
+          />
+        </span>
+        <span v-else class="pessoa_name">
           <b>Nome:</b>
           {{person.name}}
         </span>
+
         <br />
-        <span class="pessoa_cpf">
+        <span v-if="person.edit" class="pessoa_cpf">
+          CPF
+          <input
+            type="text"
+            name="cpf"
+            id="cpf"
+            placeholder="Ex.: 000.000.000-00"
+            class="form-control"
+            v-model="person.cpf"
+          />
+        </span>
+        <span v-else class="pessoa_cpf">
           <b>CPF:</b>
           {{person.cpf}}
         </span>
+
         <br />
 
-        <span class="pessoa_dt_birth">
+        <span v-if="person.edit" class="pessoa_dt_birth">
+          Data de nascimento
+          <input
+            type="date"
+            name="dt_birth"
+            id="name"
+            placeholder="Data de nascimento"
+            class="form-control"
+            v-model="person.dt_birth"
+          />
+        </span>
+        <span v-else class="pessoa_dt_birth">
           <b>Data de nascimento:</b>
           {{person.dt_birth}}
         </span>
+
         <br />
-        <span class="pessoa_salary">
+
+        <span v-if="person.edit" class="pessoa_salary">
+          Salário
+          <input
+            type="number"
+            name="salary"
+            min="0"
+            step="any"
+            id="name"
+            placeholder="Ex.: R$ 500,00"
+            class="form-control"
+            v-model="person.salary"
+          />
+        </span>
+        <span v-else class="pessoa_salary">
           <b>Salário:</b>
           R$ {{person.salary}}
         </span>
+
         <br />
-        <p>
+
+        <div v-if="person.edit">
+          <button
+            type="button"
+            class="btn btn-primary"
+            style="padding: 0px; margin: 5px"
+            v-on:click.prevent="updatePerson(index)"
+          >Salvar alteração</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            style="background-color:red; padding: 0px; border-color:red; margin: 5px"
+            v-on:click.prevent="cancelEdit(index)"
+          >Cancelar</button>
+        </div>
+
+        <div v-else>
           <button
             type="button"
             class="btn btn-primary"
@@ -96,9 +164,9 @@
             type="button"
             class="btn btn-primary"
             style="padding: 0px; margin: 5px"
-            v-on:click.prevent="updatePerson(index)"
+            v-on:click.prevent="setEdit(index)"
           >Editar</button>
-        </p>
+        </div>
       </div>
     </div>
     <hr />
@@ -159,14 +227,14 @@ export default {
           name: this.name,
           cpf: this.cpf,
           dt_birth: this.dt_birth,
-          salary: this.salary
+          salary: this.salary,
+          edit: false
         });
 
         this.name = "";
         this.cpf = "";
         this.dt_birth = new Date(0);
         this.salary = 0.0;
-        this.listPeople;
       }
     },
 
@@ -174,10 +242,19 @@ export default {
       db.database()
         .ref("people/" + index)
         .set(null);
-      console.log("index = " + index + "- removed person");
     },
     updatePerson(index) {
       return index;
+    },
+    setEdit(index) {
+      db.database()
+        .ref("people/" + index)
+        .update({ edit: true });
+    },
+    cancelEdit(index) {
+      db.database()
+        .ref("people/" + index)
+        .update({ edit: false });
     }
   },
   computed: {
