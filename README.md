@@ -2,9 +2,9 @@
 
 ```
 A simple crud made for an internship selection process.
-Deploy: https://crud-people.firebaseapp.com/
 ```
-
+# DEPLOY
+- Firebase hosting: https://crud-people.firebaseapp.com/
 ## Technologies used
 
 ```
