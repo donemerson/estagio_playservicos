@@ -3,8 +3,11 @@
 ```
 A simple crud made for an internship selection process.
 ```
+
 # DEPLOY
 - Firebase hosting: https://crud-people.firebaseapp.com/
+- Also on firebase, but with my domain name: https://crud.emersonmurilo.dev/
+
 ## Technologies used
 
 ```
@@ -15,6 +18,18 @@ A simple crud made for an internship selection process.
 - VueFire
 - Database: Firebase
 ```
+
+## FINISHED
+- [x] Add person
+- [x] Remove person
+- [x] Edit person
+- [x] List of people
+
+## TODO
+- [ ] Migrate to Vuetify template
+- [ ] Use Vuetify.model on Edit
+- [ ] Migrate to another database in real time or create a back-end server with the same functionality
+- [ ] Suggestions?
 
 ## Project setup
 
@@ -41,12 +56,9 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
 ### Font and Links used to learn in 3 days
 
+- See [Configuration Reference](https://cli.vuejs.org/config/)
 - https://bootstrap-vue.js.org/docs
 - https://getbootstrap.com/docs/4.4/getting-started/introduction/
 - https://firebase.google.com/docs/database/web/read-and-write?hl=pt-br
