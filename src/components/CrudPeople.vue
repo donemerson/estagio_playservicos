@@ -170,7 +170,20 @@
       </div>
     </div>
     <hr />
-
+    <footer id="footer">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="list-unstyled">
+            <li>
+              <p>
+                Desenvolvido pelo
+                <a href="https://github.emersonmurilo.dev">Emerson Murilo.</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
     <!-- Modal -->
   </div>
 
@@ -230,7 +243,13 @@ export default {
         edit: false
       };
       if (this.checkForm(newP)) {
-        peopleRef.push({ newP });
+        peopleRef.push({
+          name: this.name,
+          cpf: this.cpf,
+          dt_birth: this.dt_birth,
+          salary: this.salary,
+          edit: false
+        });
 
         this.name = "";
         this.cpf = "";
