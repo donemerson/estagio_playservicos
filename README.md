@@ -46,7 +46,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Font and Links used to learn in 3 days
 
-```
 - https://firebase.google.com/docs/database/web/read-and-write?hl=pt-br
 - https://github.com/vuejs/vuefire
 - https://cli.vuejs.org/dev-guide/plugin-dev.html#getting-started
@@ -61,4 +60,3 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [VueJs em 1 hora](https://www.youtube.com/watch?v=cSa-SMVMGsE)
 - [Iniciando com Vue.js / Parte #01 - Criando uma aplicação com vue cli](https://www.youtube.com/watch?v=ufQhPH0eyvo)
 - [Iniciando com Vue.js / Parte #02 - Estrutura do projeto 6 MINUTOS](https://www.youtube.com/watch?v=XDtEcPdCdeY)
-```
