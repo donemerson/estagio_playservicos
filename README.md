@@ -2,6 +2,7 @@
 
 ```
 A simple crud made for an internship selection process.
+Deploy: https://crud-people.firebaseapp.com/
 ```
 
 ## Technologies used
