@@ -142,7 +142,7 @@
             type="button"
             class="btn btn-primary"
             style="padding: 0px; margin: 5px"
-            v-on:click.prevent="updatePerson(index)"
+            v-on:click.prevent="updatePerson(person, index)"
           >Salvar alteração</button>
           <button
             type="button"
@@ -192,19 +192,19 @@ export default {
   },
 
   methods: {
-    checkForm() {
-      if (this.name == "") {
+    checkForm(p) {
+      if (p.name == "") {
         alert("Nome inválido");
         return false;
-      } else if (this.cpf == "") {
+      } else if (p.cpf == "") {
         // TODO: Mask
         alert("CPF inválido");
         return false;
-      } else if (this.dt_birth.toString() === new Date(0).toString()) {
+      } else if (p.dt_birth.toString() === new Date(0).toString()) {
         //pode ser melhorado
         alert("Data de nascimento inválida");
         return false;
-      } else if (this.salary < 0) {
+      } else if (p.salary < 0) {
         //coloquei min no input, porem por segurança
         alert("Salário inválido");
         return false;
@@ -222,14 +222,15 @@ export default {
       return this.people;
     },
     addPerson() {
-      if (this.checkForm()) {
-        peopleRef.push({
-          name: this.name,
-          cpf: this.cpf,
-          dt_birth: this.dt_birth,
-          salary: this.salary,
-          edit: false
-        });
+      var newP = {
+        name: this.name,
+        cpf: this.cpf,
+        dt_birth: this.dt_birth,
+        salary: this.salary,
+        edit: false
+      };
+      if (this.checkForm(newP)) {
+        peopleRef.push({ newP });
 
         this.name = "";
         this.cpf = "";
@@ -243,8 +244,19 @@ export default {
         .ref("people/" + index)
         .set(null);
     },
-    updatePerson(index) {
-      return index;
+    updatePerson(person, index) {
+      var newP = {
+        edit: false,
+        name: person.name,
+        dt_birth: person.dt_birth,
+        salary: person.salary,
+        cpf: person.cpf
+      };
+      if (this.checkForm(newP)) {
+        db.database()
+          .ref("people/" + index)
+          .update(newP);
+      }
     },
     setEdit(index) {
       db.database()
