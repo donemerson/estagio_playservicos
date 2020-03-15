@@ -185,6 +185,10 @@
       </div>
     </footer>
     <!-- Modal -->
+    <br />
+    <br />
+    <br />
+    <br />
   </div>
 
   <!-- TESTE-->
@@ -194,6 +198,12 @@
 import { peopleRef } from "../firebase";
 import { db } from "../firebase";
 export default {
+  created() {
+    this.addVisitant();
+  },
+  destroyed() {
+    this.addVisitant();
+  },
   data() {
     return {
       people: [], //array two data bind
@@ -232,6 +242,7 @@ export default {
         //console.log(this.people);
         //return snapshoot.val();
       });
+
       return this.people;
     },
     addPerson() {
@@ -250,7 +261,24 @@ export default {
           salary: this.salary,
           edit: false
         });
-
+        var short_operation = "addPerson";
+        var full_operation =
+          "peopleRef.push({" +
+          "name: " +
+          this.name +
+          ", " +
+          "cpf: " +
+          this.cpf +
+          ", " +
+          "dt_birth: " +
+          this.dt_birth +
+          ", " +
+          "salary: " +
+          this.salary +
+          ", " +
+          "edit: false" +
+          ", });";
+        this.pushOperationLogger(short_operation, full_operation);
         this.name = "";
         this.cpf = "";
         this.dt_birth = new Date(0);
@@ -262,6 +290,10 @@ export default {
       db.database()
         .ref("people/" + index)
         .set(null);
+      var short_operation = "removePerson";
+      var full_operation =
+        'db.database().ref("people/' + index + ").set(null);";
+      this.pushOperationLogger(short_operation, full_operation);
     },
     updatePerson(person, index) {
       var newP = {
@@ -275,17 +307,90 @@ export default {
         db.database()
           .ref("people/" + index)
           .update(newP);
+        var short_operation = "updatePerson";
+        var full_operation =
+          "peopleRef.update({" +
+          "name: " +
+          newP.name +
+          ", " +
+          "cpf: " +
+          newP.cpf +
+          ", " +
+          "dt_birth: " +
+          newP.dt_birth +
+          ", " +
+          "salary: " +
+          newP.salary +
+          ", " +
+          "edit: false" +
+          ", });";
+        this.pushOperationLogger(short_operation, full_operation);
       }
     },
     setEdit(index) {
       db.database()
         .ref("people/" + index)
         .update({ edit: true });
+      var short_operation = "setEdit";
+      var full_operation =
+        'db.database().ref("people/' + index + ").update({edit: true});";
+      this.pushOperationLogger(short_operation, full_operation);
     },
     cancelEdit(index) {
       db.database()
         .ref("people/" + index)
         .update({ edit: false });
+      var short_operation = "cancelEdit";
+      var full_operation =
+        'db.database().ref("people/' + index + ").update({edit: false});";
+      this.pushOperationLogger(short_operation, full_operation);
+    },
+    async pushOperationLogger(short_operation, full_operation) {
+      var fl_trace = await (
+        await fetch("https://www.cloudflare.com/cdn-cgi/trace")
+      ).text();
+      var geoip = await (await fetch("https://freegeoip.app/json/")).json();
+      var traceSplited = fl_trace.split("\n");
+      fl_trace = fl_trace.toString();
+      fl_trace = traceSplited[0].substring(3, traceSplited[0].length - 1);
+      /*  
+      O trace contem o atributo fl do webservice da cloudflare, que atribui um id para uma sessão do usuario, caso ele feche e abra o navegador novamente, esse fl muda de valor, e conta como uma nova sessão.
+      */
+      db.database()
+        .ref("log/operations")
+        .push({
+          fl: fl_trace,
+          short_operation: short_operation,
+          full_operation: full_operation,
+          dt_operation: new Date(),
+          ip: geoip.ip,
+          country_code: geoip.country_code,
+          region_code: geoip.region_code,
+          city: geoip.city,
+          date: new Date().toUTCString()
+        });
+      this.addVisitant();
+    },
+    async addVisitant() {
+      /*  
+      O trace contem o atributo fl do webservice da cloudflare, que atribui um id para uma sessão do usuario, caso ele feche e abra o navegador novamente, esse fl muda de valor, e conta como uma nova sessão.
+      */
+      var geoip = await (await fetch("https://freegeoip.app/json/")).json();
+      var fl_trace = await (
+        await fetch("https://www.cloudflare.com/cdn-cgi/trace")
+      ).text();
+      var traceSplited = fl_trace.split("\n");
+      fl_trace = fl_trace.toString();
+      fl_trace = traceSplited[0].substring(3, traceSplited[0].length - 1);
+      db.database()
+        .ref("log/traces/" + fl_trace)
+        .set({
+          ip: geoip.ip,
+          country_code: geoip.country_code,
+          region_code: geoip.region_code,
+          city: geoip.city,
+          last_visit_date: new Date().toUTCString()
+        });
     }
   },
   computed: {
